@@ -58,3 +58,21 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/product-api:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/product-api:${{ github.sha }}
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Pull latest Docker image
+        run: docker compose -f docker-compose-prod.yaml pull product-api
+
+      - name: Deploy to Local Docker Engine
+        run: docker compose -f docker-compose-prod.yaml up -d
+
+      - name: Check production containers
+        run: docker compose -f docker-compose-prod.yaml ps
