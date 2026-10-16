@@ -1,3 +1,4 @@
+
 require('dotenv').config({ quiet: true });
 
 const request = require('supertest');
@@ -8,9 +9,12 @@ const Product = require('../models/Product');
 
 jest.setTimeout(30000);
 
-// Ket noi MongoDB truoc khi chay test
+// Ket noi database rieng de chay test
 beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI, {
+    const testMongoUri = new URL(process.env.MONGO_URI);
+    testMongoUri.pathname = '/productdb_test';
+
+    await mongoose.connect(testMongoUri.toString(), {
         serverSelectionTimeoutMS: 10000
     });
 });
@@ -97,6 +101,15 @@ describe('Product API CRUD Test', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBe('Product deleted successfully');
+    });
+
+    // Test GET san pham khong ton tai - Cau 8
+    test('GET /products/:pid - Khong tim thay san pham tra 404', async () => {
+        const response = await request(app)
+            .get('/products/NOT_FOUND');
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body.message).toBe('Product not found');
     });
 
 });
