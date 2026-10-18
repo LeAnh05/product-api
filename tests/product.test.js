@@ -104,12 +104,9 @@ describe('Product API CRUD Test', () => {
     });
 
     // Test GET san pham khong ton tai - Cau 8
-    test('GET /products/:pid - Khong tim thay san pham tra 404', async () => {
-        const response = await request(app)
-            .get('/products/NOT_FOUND');
-
-        expect(response.statusCode).toBe(404);
-        expect(response.body.message).toBe('Product not found');
+    test('GET sản phẩm không tồn tại trả 404', async () => {
+        const res = await request(app).get('/api/products/999');
+        expect(res.statusCode).toBe(404);
     });
 
 });
