@@ -69,7 +69,7 @@ describe('Product API CRUD Test', () => {
         await Product.create({
             pid: 'P003',
             pname: 'Sua cu',
-            price: 30000,
+            price: 20000,
             quantity: 5
         });
 
