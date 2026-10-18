@@ -69,7 +69,7 @@ describe('Product API CRUD Test', () => {
         await Product.create({
             pid: 'P003',
             pname: 'Sua cu',
-            price: 20000,
+            price: 30000,
             quantity: 5
         });
 
@@ -108,5 +108,6 @@ describe('Product API CRUD Test', () => {
         const res = await request(app).get('/api/products/999');
         expect(res.statusCode).toBe(404);
     });
+
 
 });
