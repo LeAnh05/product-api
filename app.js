@@ -111,7 +111,7 @@ app.get('/', (req, res) => {
 // Healthcheck
 app.get('/health', (req, res) => {
     res.status(200).json({
-        status: 'OK'
+        status: 'OK', version: 'v1'
     });
 });
 
