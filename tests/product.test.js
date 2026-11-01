@@ -105,7 +105,7 @@ describe('Product API CRUD Test', () => {
 
     // Test GET san pham khong ton tai - Cau 8
     test('GET sản phẩm không tồn tại trả 404', async () => {
-        const res = await request(app).get('/products/999');
+        const res = await request(app).get('/products/P888');
         expect(res.statusCode).toBe(404);
         expect(res.body.message).toBe('Product not found');
     });
